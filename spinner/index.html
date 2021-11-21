@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body class="w-full overflow-scroll h-auto">
+    <div class="bg-gray-800 w-3/4 py-2 rounded-lg shadow-lg h-auto">
+      <div class="px-2 py-5">
+        <div class="w-full flex justify-between items-center">
+          <button
+            onclick="reset()"
+            class="
+              inline-block
+              bg-purple-900
+              hover:bg-purple-600
+              active:bg-purple-700
+              focus-visible:ring
+              ring-indigo-300
+              text-white text-sm
+              font-semibold
+              text-center
+              rounded-lg
+              outline-none
+              transition
+              duration-100
+              px-8
+              py-4
+            "
+          >
+            reset
+          </button>
+
+          <input
+            id="startingdate"
+            type="date"
+            class="
+              inline-block
+              bg-purple-900
+              hover:bg-purple-600
+              active:bg-purple-700
+              focus-visible:ring
+              ring-indigo-300
+              text-white text-sm
+              font-semibold
+              text-center
+              rounded-lg
+              outline-none
+              transition
+              duration-100
+              px-8
+              py-4
+            "
+          />
+        </div>
+        <!-- text - start -->
+        <div
+          id="listItemHandler"
+          class="flex flex-col gap-4 justify-between items-center mb-2 mt-5"
+        >
+          <textarea
+            id="listInput"
+            cols="30"
+            rows="10"
+            placeholder="Enter list ...."
+            class="
+              w-full
+              h-64
+              bg-gray-50
+              text-gray-800
+              border
+              focus:ring
+              ring-indigo-300
+              rounded
+              outline-none
+              transition
+              duration-100
+              px-3
+              py-2
+            "
+          ></textarea>
+          <button
+            id="addList"
+            class="
+              inline-block
+              bg-purple-500
+              hover:bg-indigo-600
+              active:bg-indigo-700
+              focus-visible:ring
+              ring-indigo-300
+              text-white text-sm
+              md:text-base
+              font-semibold
+              text-center
+              rounded-lg
+              outline-none
+              transition
+              duration-100
+              px-8
+              py-3
+            "
+          >
+            START
+          </button>
+          <!-- List of selectors -->
+        </div>
+        <div id="list" class="flex gap-3 flex-wrap justify-center mt-10"></div>
+
+        <div class="grid sm:grid-cols-2 gap-6">
+          <div
+            class="
+              h-80
+              flex flex-col
+              items-center
+              justify-around
+              bg-gray-900
+              rounded-lg
+              overflow-hidden
+              shadow-lg
+              relative
+            "
+          >
+            <span
+              id="wait"
+              class="
+                w-3/4
+                h-40
+                flex
+                justify-center
+                items-center
+                bg-gray-200
+                shadow-lg
+                rounded-lg
+              "
+            >
+              waiting you pick...
+            </span>
+
+            <button
+              id="pickerSubmit"
+              onclick="getRandom()"
+              class="
+                inline-block
+                bg-purple-500
+                hover:bg-indigo-600
+                active:bg-indigo-700
+                focus-visible:ring
+                ring-indigo-300
+                text-white text-sm
+                md:text-base
+                font-semibold
+                text-center
+                rounded-lg
+                outline-none
+                transition
+                duration-100
+                px-8
+                py-3
+              "
+            >
+              🐱‍🏍 PICK
+            </button>
+          </div>
+          <div
+            class="
+              p-3
+              h-80
+              flex flex-col
+              items-start
+              justify-start
+              bg-gray-900
+              rounded-lg
+              overflow-y-scroll
+              shadow-lg
+              relative
+              text-white
+            "
+          >
+            <h3>current order :</h3>
+
+            <div id="order" class="flex flex-col w-full"></div>
+          </div>
+        </div>
+        <div class="w-full flex justify-center mt-10">
+          <button
+            onclick="downloadCSV()"
+            class="
+              inline-block
+              bg-purple-900
+              hover:bg-purple-600
+              active:bg-purple-700
+              focus-visible:ring
+              ring-indigo-300
+              text-white text-sm
+              font-semibold
+              text-center
+              rounded-lg
+              outline-none
+              transition
+              duration-100
+              px-8
+              py-4
+            "
+          >
+            DOWNLOAD
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
+      integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="moment.js"></script>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
