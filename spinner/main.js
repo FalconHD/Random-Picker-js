@@ -2,14 +2,16 @@
 let startingDate = document.querySelector('#startingdate')
 
 let list = document.querySelector('#list')
+let addList = document.querySelector('#addList')
 let order = document.querySelector('#order')
 let arr = []
 let finalResult = [["order", "Full Name", "subject", "Date"]]
 let orderStudents = 1
 let adder = 0
 let ready = false
+let dataClean = true
 
-
+// addList.disabled = true
 
 //add List from textarea to the main data
 document.querySelector('#addList').addEventListener("click", (e) => {
@@ -26,20 +28,27 @@ document.querySelector('#addList').addEventListener("click", (e) => {
         name: data[0].split(':')[1],
         subject: data[1].split(':')[1]
       }
-      let regexName = student.name.match(/[^\w\s]/gi, "") || student.subject.match(/[^\w\s]/gi, "") ? false : true;
+      let regexName = student.name.match(/[^\w\s.-]/gi, "") || student.subject.match(/[^\w\s.-]/gi, "") ? false : true;
       if (regexName) {
         arr.push(student)
+      } else {
+        dataClean = false
       }
-
+      console.log(dataClean, student.name, student.subject);
     }
   })
-  listItems()
+  if (dataClean) {
+    listItems()
+  } else {
+    dataClean = true
+    reset()
+    alert('you have invalid input try to remove special caracters')
+  }
 })
 
 
 //get random student from the List
 const getRandom = () => {
-  console.log("inn");
   if (arr.length > 0) {
     let couter = 0
     let falsh = setInterval(() => {
@@ -61,6 +70,7 @@ const getRandom = () => {
     }, 100);
   } else {
     alert("you are done ")
+    return
   }
 }
 
@@ -230,3 +240,51 @@ window.alInOne = alInOne
 // subject : F. Scott Fitzgerald;
 // name : Edgar Allen Poe
 // subject : Edgar Allen Poe;
+
+
+// name: maacha
+// subject: otmane;
+// name: RAMMACH
+// subject: ELMAHDI;
+// name: CHOUQFI
+// subject: Ayoub;
+// name: HASSOUNE
+// subject: YOUNESS;
+// name: Hajjari
+// subject: Youseff;
+// name: Rhazlani
+// subject: Othmane;
+// name: ETTGHARSSI
+// subject: Achraf;
+// name: CHANTAF
+// subject: BADR;
+// name: Enefida
+// subject: Rafik;
+// name: ELHOUBI
+// subject: YASSINE;
+// name: BELBHIRIYA
+// subject: Zineb;
+// name: ED - DOUJ
+// subject: Ouissal;
+// name: Redouane
+// subject: BOUABANA;
+// name:EL MESKINE
+// subject: Anas;
+// name: Boumlik
+// subject: mohamed;
+// name: elmejjati
+// subject: soufiane;
+// name: Rkhis
+// subject: Imane;
+// name:EL KAMOUNI
+// subject: HICHAM;
+// name: Azouzi
+// subject: Hamza;
+// name: ESSALAMI
+// subject: SAID;
+// name: Moultamiss
+// subject: Walid;
+// name: elbakkouri
+// subject: youssef;
+// name: Khomsi
+// subject: Adam;
