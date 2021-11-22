@@ -4,7 +4,7 @@ let startingDate = document.querySelector('#startingdate')
 let list = document.querySelector('#list')
 let order = document.querySelector('#order')
 let arr = []
-let finalResult = []
+let finalResult = [["order", "Full Name", "subject", "Date"]]
 let orderStudents = 1
 let adder = 0
 let ready = false
@@ -26,7 +26,11 @@ document.querySelector('#addList').addEventListener("click", (e) => {
         name: data[0].split(':')[1],
         subject: data[1].split(':')[1]
       }
-      arr.push(student)
+      let regexName = student.name.match(/[^\w\s]/gi, "") || student.subject.match(/[^\w\s]/gi, "") ? false : true;
+      if (regexName) {
+        arr.push(student)
+      }
+
     }
   })
   listItems()
@@ -64,7 +68,7 @@ const getRandom = () => {
 const reset = () => {
   adder = 0
   orderStudents = 1
-  finalResult = []
+  finalResult = [["order", "Full Name", "subject", "Date"]]
   arr = []
   order.innerHTML = ""
   list.innerHTML = ""
@@ -96,11 +100,11 @@ const addOrder = (idx) => {
     let span = document.createElement('span')
     let date = skipWeekend(moment(datePicked, 'DD-MM-YYYY'), orderStudents + adder - 1)
     span.setAttribute("class", "w-full flex justify-between	")
-    console.log("addOrder:", date);
     span.innerHTML = `<span>${orderStudents} - ${elm.name}  =>   ${elm.subject}</span><span> ${date._d.toLocaleString().split(',')[0]}</span>`
     order.appendChild(span)
     arr.splice(idx, 1)
-    finalResult.push(`${orderStudents} ${elm.name} ${elm.subject} ${date._d.toLocaleString().split(',')[0].split('/').reverse().join('-')}`.split(' '))
+    let dateTochange = (new Date(date._d.toLocaleString().split(',')[0])).toLocaleDateString().split('/').join('-')
+    finalResult.push(`${orderStudents} ${elm.name.split(' ').join(".")} ${elm.subject.split(' ').join('.')} ${dateTochange}`.split(' '))
     listItems()
   }
   orderStudents++
