@@ -7,6 +7,7 @@
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
   </head>
@@ -34,7 +35,7 @@
               py-4
             "
           >
-            reset
+            RESET
           </button>
 
           <input
@@ -108,9 +109,13 @@
           >
             START
           </button>
+
           <!-- List of selectors -->
         </div>
-        <div id="list" class="flex gap-3 flex-wrap justify-center mt-10"></div>
+        <div
+          id="list"
+          class="flex gap-3 flex-wrap justify-center mt-10 mb-5"
+        ></div>
 
         <div class="grid sm:grid-cols-2 gap-6">
           <div
@@ -142,30 +147,55 @@
               waiting you pick...
             </span>
 
-            <button
-              id="pickerSubmit"
-              onclick="getRandom()"
-              class="
-                inline-block
-                bg-purple-500
-                hover:bg-indigo-600
-                active:bg-indigo-700
-                focus-visible:ring
-                ring-indigo-300
-                text-white text-sm
-                md:text-base
-                font-semibold
-                text-center
-                rounded-lg
-                outline-none
-                transition
-                duration-100
-                px-8
-                py-3
-              "
-            >
-              🐱‍🏍 PICK
-            </button>
+            <div class="flex gap-3">
+              <button
+                id="pickerSubmit"
+                onclick="getRandom()"
+                class="
+                  inline-block
+                  bg-purple-500
+                  hover:bg-indigo-600
+                  active:bg-indigo-700
+                  focus-visible:ring
+                  ring-indigo-300
+                  text-white text-sm
+                  md:text-base
+                  font-semibold
+                  text-center
+                  rounded-lg
+                  outline-none
+                  transition
+                  duration-100
+                  px-8
+                  py-3
+                "
+              >
+                💥 PICK 💥
+              </button>
+              <button
+                onclick="alInOne()"
+                class="
+                  inline-block
+                  bg-purple-500
+                  hover:bg-indigo-600
+                  active:bg-indigo-700
+                  focus-visible:ring
+                  ring-indigo-300
+                  text-white text-sm
+                  md:text-base
+                  font-semibold
+                  text-center
+                  rounded-lg
+                  outline-none
+                  transition
+                  duration-100
+                  px-8
+                  py-3
+                "
+              >
+                ALL IN ONE
+              </button>
+            </div>
           </div>
           <div
             class="
@@ -182,7 +212,7 @@
               text-white
             "
           >
-            <h3>current order :</h3>
+            <h3>Final order :</h3>
 
             <div id="order" class="flex flex-col w-full"></div>
           </div>
@@ -219,7 +249,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <script src="moment.js"></script>
-    <script type="module" src="/main.js"></script>
+    <script src="/main.js"></script>
   </body>
 </html>

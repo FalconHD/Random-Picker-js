@@ -1,4 +1,3 @@
-import "./style.css"
 
 let startingDate = document.querySelector('#startingdate')
 
@@ -7,6 +6,7 @@ let order = document.querySelector('#order')
 let arr = []
 let finalResult = []
 let orderStudents = 1
+let adder = 0
 let ready = false
 
 
@@ -35,17 +35,20 @@ document.querySelector('#addList').addEventListener("click", (e) => {
 
 //get random student from the List
 const getRandom = () => {
+  console.log("inn");
   if (arr.length > 0) {
     let couter = 0
     let falsh = setInterval(() => {
       let currentIndex = Math.floor(Math.random() * arr.length)
       console.log(currentIndex);
+      flash()
       document.querySelector('#wait').innerHTML = `${arr[currentIndex].name}`
       couter++
-      if (couter > 10) {
+      if (couter > 30) {
         clearInterval(falsh)
         ready = true
         couter = 0
+        greenFlash()
       }
       if (ready) {
         addOrder(currentIndex)
@@ -59,12 +62,16 @@ const getRandom = () => {
 
 //reset to input step
 const reset = () => {
+  adder = 0
   orderStudents = 1
   finalResult = []
   arr = []
   order.innerHTML = ""
   list.innerHTML = ""
   document.querySelector('#listItemHandler').style.display = "flex"
+  document.querySelector('#wait').innerHTML = " waiting you pick..."
+  document.querySelector('#wait').classList.remove("bg-green-400")
+  document.querySelector('#wait').classList.add("bg-gray-200")
 
 }
 
@@ -87,30 +94,31 @@ const addOrder = (idx) => {
   let elm = arr[idx]
   if (elm) {
     let span = document.createElement('span')
-    let date = skipWeekend(moment(datePicked, 'DD-MM-YYYY'), orderStudents - 1)
+    let date = skipWeekend(moment(datePicked, 'DD-MM-YYYY'), orderStudents + adder - 1)
     span.setAttribute("class", "w-full flex justify-between	")
-    span.innerHTML = `<span>${orderStudents} - ${elm.name} subject  ${elm.subject}</span><span> ${date._d.toLocaleString().split(',')[0]}</span>`
+    console.log("addOrder:", date);
+    span.innerHTML = `<span>${orderStudents} - ${elm.name}  =>   ${elm.subject}</span><span> ${date._d.toLocaleString().split(',')[0]}</span>`
     order.appendChild(span)
     arr.splice(idx, 1)
     finalResult.push(`${orderStudents} ${elm.name} ${elm.subject} ${date._d.toLocaleString().split(',')[0].split('/').reverse().join('-')}`.split(' '))
     listItems()
   }
   orderStudents++
+  if (arr.length == 0) document.querySelector('#wait').innerHTML = "DONE"
 }
 
-
-
-
 //check the validity of the date and skip the weekends
-const skipWeekend = (date, days) => {
-  date = moment(date); // use a clone
+const skipWeekend = (d, days) => {
+  date = moment(d); // use a clone
+  if (days == 0 && !isNotWeekEnd(date)) {
+    return moment(defaultSkipWeekEnd(d))
+  }
   while (days > 0) {
     date = date.add(1, 'days');
     if (isNotWeekEnd(date)) {
       days -= 1;
     }
   }
-
   return date;
 }
 
@@ -134,18 +142,87 @@ const downloadCSV = () => {
 const defaultSkipWeekEnd = (date) => {
   let d = moment(date);
   if (!isNotWeekEnd(date)) {
-    date = d.isoWeekday() == 6 ? d.add(2, 'days') : d.add(1, 'days')
+    d.isoWeekday() == 6 ? (date = d.add(2, 'days'), adder = 1) : (date = d.add(1, 'days'), adder = 1)
     let arrayDate = date._d.toLocaleDateString().split('/')
     return [arrayDate[2], arrayDate[0], arrayDate[1]].join('-')
   } else {
-    return date
+    let arrayDate = date._d.toLocaleDateString().split('/')
+    return [arrayDate[2], arrayDate[0], arrayDate[1]].join('-')
   }
 }
 
-// startingDate.addEventListener
+
+
+const flash = () => {
+  document.querySelector('#wait').classList.remove("bg-gray-200")
+  document.querySelector('#wait').classList.remove("bg-green-400")
+  document.querySelector('#wait').classList.add("bg-white")
+  document.querySelector('#wait').classList.add("text-white")
+  setTimeout(() => {
+    document.querySelector('#wait').classList.remove("bg-white")
+    document.querySelector('#wait').classList.remove("text-white")
+    document.querySelector('#wait').classList.add("bg-gray-200")
+  }, 100);
+}
+
+const alInOne = () => {
+  for (let i = 0; i < arr.length; i++) {
+    getRandom()
+  }
+}
+
+const greenFlash = () => {
+  document.querySelector('#wait').classList.remove("bg-gray-200")
+  document.querySelector('#wait').classList.add("bg-green-400")
+  document.querySelector('#wait').classList.add("text-green")
+}
+
 
 startingDate.defaultValue = defaultSkipWeekEnd(moment((new Date()).toISOString().split('T')[0]));
 //making functions global
 window.downloadCSV = downloadCSV
 window.getRandom = getRandom
 window.reset = reset
+window.alInOne = alInOne
+
+
+
+
+// name : George Eliot
+// subject : George Eliot;
+// name : J.K. Rowling
+// subject : J.K. Rowling;
+// name : Walt Whitman
+// subject : Walt Whitman;
+// name : John Steinbeck
+// subject : John Steinbeck;
+// name : Emily Bronte
+// subject : Emily Bronte;
+// name : Stephen King
+// subject : Stephen King;
+// name : J.R.R Tolkien
+// subject : J.R.R Tolkien;
+// name : Charles Dickens
+// subject : Charles Dickens;
+// name : Jane Austen
+// subject : Jane Austen;
+// name : William Butler Yeats
+// subject : William Butler Yeats;
+// name : William Shakespeare
+// subject : William Shakespeare;
+// name : Mark Twain
+// subject : Mark Twain;
+// name : William Faulkner
+// subject : William Faulkner;
+// name : Emily Dickinson
+// subject : Emily Dickinson;
+// name : George Orwell
+// subject : George Orwell;
+// name : Ernest Hemingway
+// subject : Ernest Hemingway;
+// name : Harper Lee
+// subject : Harper Lee;
+// name : F. Scott Fitzgerald
+// subject : F. Scott Fitzgerald;
+// name : Edgar Allen Poe
+// subject : Edgar Allen Poe;
