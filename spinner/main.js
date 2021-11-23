@@ -11,7 +11,6 @@ let adder = 0
 let ready = false
 let dataClean = true
 
-// addList.disabled = true
 
 //add List from textarea to the main data
 document.querySelector('#addList').addEventListener("click", (e) => {
@@ -37,12 +36,12 @@ document.querySelector('#addList').addEventListener("click", (e) => {
       console.log(dataClean, student.name, student.subject);
     }
   })
-  if (dataClean) {
+  if (dataClean && arr.length > 0) {
     listItems()
   } else {
+    dataClean ? alert('you have to add students first  ') : alert('you have invalid input try to remove special caracters  ')
     dataClean = true
     reset()
-    alert('you have invalid input try to remove special caracters')
   }
 })
 
@@ -144,7 +143,6 @@ const isNotWeekEnd = (date) => {
 
 //download CSV  
 const downloadCSV = () => {
-  console.log(finalResult);
   let csvContent = "data:text/csv;charset=utf-8,"
     + finalResult.map(e => e.join(",")).join("\n");
   var encodedUri = encodeURI(csvContent);
@@ -152,7 +150,7 @@ const downloadCSV = () => {
 }
 
 
-//set Default starting date to today 
+//set Default starting date to today
 const defaultSkipWeekEnd = (date) => {
   let d = moment(date);
   if (!isNotWeekEnd(date)) {
